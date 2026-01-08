@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>AXIUM | Relojes Personalizados</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ===== GLOBAL ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+html, body {
+    overflow-x: hidden; /* evita scroll horizontal */
+}
+
+body {
+    background: #000;
+    color: #fff;
+    line-height: 1.6;
+}
+
+/* ===== NAVBAR ===== */
+header{
+    position:fixed;
+    top:0;
+    width:100%;
+    background:#000;
+    padding:20px 60px;
+    z-index:1000;
+}
+
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    height:34px;
+}
+
+.menu{
+    list-style:none;
+    display:flex;
+    gap:35px;
+}
+
+.menu li{
+    font-size:12px;
+}
+
+.menu li a{
+    color:#fff;
+    text-decoration:none;
+    font-size:12px;
+}
+
+/* ===== BANNER LOGO (SECCIÓN NORMAL) ===== */
+.logo-banner{
+    width:100%;
+    height:220px;
+    background:#000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position: relative;
+    z-index: 1;
+}
+
+.logo-banner img{
+    height:100px;
+    display: block;
+    margin-top: 60px;
+}
+/* ===== HERO ===== */
+.hero {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.hero img.active {
+    opacity: 1;
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    opacity: 0.7;
+    z-index: 10;
+}
+
+.arrow:hover { opacity: 1; }
+.arrow.left { left: 20px; }
+.arrow.right { right: 20px; }
+
+.dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #777;
+}
+
+.dot.active {
+    background: #fff;
+}
+
+/* ===== SECCIONES ===== */
+.section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px 40px;
+    padding: 120px 5%;
+}
+
+.section.discover {
+    padding: 60px 5%;
+}
+
+.black { background: #000; }
+.white { background: #fff; color: #000; }
+
+.mini {
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.white .mini { color: #999; }
+
+.section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.section p {
+    color: #bbb;
+}
+
+.white p { color: #333; }
+
+/* ===== BOTONES ===== */
+.btn {
+    margin-top: 20px;
+    padding: 12px 32px;
+    border-radius: 40px;
+    border: none;
+    background: #fff;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-black {
+    background: #000;
+    color: #fff;
+    margin-top: 20px;
+    padding: 12px 32px;
+    border-radius: 40px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    justify-self: end;
+}
+
+/* ===== DESCUBRE ===== */
+.descubre-img img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* ===== SOBRE NOSOTROS ===== */
+.about-text {
+    grid-column: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* ===== BENEFICIOS ===== */
+.benefits {
+    grid-column: 2/4;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* ===== CONTADORES ===== */
+.stats {
+    grid-column: 2/4;
+    display: flex;
+    gap: 20px;
+    justify-content: flex-start;
+    align-items: stretch;
+    margin-top: 20px;
+}
+
+.stat-card {
+    background: transparent;
+    color: inherit;
+    padding: 20px 24px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 150px;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.stat-label {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* ===== SCROLL SECTIONS ===== */
+.scroll {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 60vh;
+    gap: 20px;
+}
+
+.scroll img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .6s ease;
+}
+
+.scroll img:hover {
+    transform: scale(1.06);
+}
+
+.scroll .text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.reveal {
+    opacity: 0;
+    transition: 1s ease;
+}
+
+.leftAnim { transform: translateX(-50px); }
+.rightAnim { transform: translateX(50px); }
+
+.reveal.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ===== FOOTER ===== */
+footer {
+    background: #000;
+    color: #fff;
+    padding: 36px 5%;
+    border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+.footer-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.footer-logo img {
+    height: 80px;
+}
+
+.footer-contact h4, .footer-models h4 {
+    margin: 0 0 8px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #ccc;
+}
+
+.footer-contact p, .footer-models li {
+    font-size: 0.85rem;
+    color: #fff;
+}
+
+.footer-models ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* ===== RESPONSIVE GENERAL ===== */
+@media(max-width:900px){
+
+    /* HEADER */
+    header { padding: 15px 5%; }
+    nav { flex-wrap: wrap; gap: 10px; }
+    .logo { height: 28px; }
+.menu{
+    gap:12px;
+}
+.menu li a{
+    font-size:11px;
+}
+
+    /* SECCIONES */
+    .section, .scroll {
+        grid-template-columns: 1fr !important;
+        padding: 60px 5% !important;
+        justify-items: center;
+        text-align: center;
+    }
+    .section h2 { font-size: 1.6rem; }
+    .section p { font-size: 0.9rem; }
+
+    /* DESCUBRE / ABOUT / BENEFITS */
+    .descubre-img img, .about-text, .benefits, .scroll img {
+        width: 100% !important;
+        height: auto !important;
+    }
+    .about-text, .benefits div, .scroll .text {
+        width: 100%;
+        text-align: left;
+    }
+
+    /* BOTONES */
+    .btn, .btn-black {
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+    }
+
+    /* STATS */
+    .stats, .benefits {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+}
+
+/* MÁS PEQUEÑO */
+@media(max-width:600px){
+    .hero img { width: 100%; height: auto; }
+    .section h2 { font-size: 1.4rem; }
+    .section p { font-size: 0.85rem; }
+    .btn, .btn-black { font-size: 0.85rem; padding: 10px; }
+}
+
+
+</style>
+</head>
+
+<body>
+<header>
+    <nav>
+        <a href="AXIUM.html"><img src="logo.png" class="logo" alt="AXIUM"></a>
+        <ul class="menu">
+            <li><a href="Colección.html">Colección</a></li>
+            <li><a href="Sobre nosotros.html">Sobre Nosotros</a></li>
+            <li><a href="Preguntas frecuentes.html">Preguntas Frecuentes</a></li>
+            <li><a href="Contacto.html">Contacto</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <img src="FOTO1.jpg" class="active">
+    <img src="FOTO3.png">
+    <button class="arrow left">&#10094;</button>
+    <button class="arrow right">&#10095;</button>
+    <div class="dots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+    </div>
+</section>
+
+<!-- DESCUBRE -->
+<section class="section black discover">
+    <div class="mini">Descubre</div>
+    <div>
+        <h2>tu Reloj Axium Personalizado.</h2>
+        <p>Encuentra la combinación perfecta entre estilo y funcionalidad con nuestros relojes  personalizados. ¡Haz que tu reloj sea verdaderamente único!</p>
+        <button class="btn" onclick="location.href='Colección.html'">VER COLECCIÓN</button>
+        <img src="FOTOlogo.png" alt="FOTOlogo" style="margin-top:40px;width:100%;max-width:800px;display:block;">
+    </div>
+    <div class="descubre-img">
+        <img src="reloj1.webp">
+    </div>
+</section>
+
+<!-- SOBRE NOSOTROS -->
+<section class="section white">
+    <div class="mini">Sobre Nosotros</div>
+    <div>
+        <h2>Tu destino para relojes Axium personalizados y únicos</h2>
+    </div>
+    <div class="about-text">
+        <p>En Axium ofrecemos una amplia gama de relojes que puedes personalizar para hacerlos verdaderamente tuyos. Nos dedicamos a brindar calidad y exclusividad en cada pieza.<br><br>
+        Nuestra web te permite explorar diversos modelos de relojes Axium, personalizarlos a tu gusto y contactar fácilmente con nuestro servidor.</p>
+        <button class="btn-black" onclick="location.href='Sobre nosotros.html'">SABER MÁS</button>
+    </div>
+</section>
+
+<!-- BENEFICIOS -->
+<section class="section black">
+    <div class="mini">POR QUÉ ELEGIRNOS</div>
+    <div class="benefits">
+        <div><h3>Soporte dedicado</h3><p>Asesoramiento experto siempre disponible</p></div>
+        <div><h3>Personalización sin límites</h3><p>Adapta cada reloj a tu estilo</p></div>
+        <div><h3>Calidad garantizada</h3><p>Alta calidad y durabilidad</p></div>
+    </div>
+</section>
+
+<!-- SCROLL SECTIONS -->
+<section class="scroll white">
+    <div class="text reveal leftAnim">
+        <h2>Consultar con el Servidor</h2>
+        <p>Un apartado exclusivo para consultas o solicitudes especiales sobre los relojes.</p>
+    </div>
+    <img src="foto4.1.jpg" class="reveal rightAnim">
+</section>
+
+<section class="scroll black">
+    <img src="foto4.2.jpg" class="reveal rightAnim">
+    <div class="text reveal leftAnim">
+        <h2>Relojes Personalizados</h2>
+        <p>Opciones únicas que reflejan tu estilo y preferencias personales.</p>
+    </div>
+</section>
+
+<section class="scroll white">
+    <div class="text reveal rightAnim">
+        <h2>Encontrar Modelos</h2>
+        <p>Explora nuestra amplia gama de modelos Axium.</p>
+    </div>
+    <img src="foto4.3.jpg" class="reveal leftAnim">
+</section>
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-logo"><img src="logo.png" alt="AXIUM logo"></div>
+        <div class="footer-contact">
+            <h4>Contacto</h4>
+            <p>mods.skc@gmail.com</p>
+        </div>
+        <div class="footer-models">
+            <h4>Modelos</h4>
+            <ul>
+                <li>DateJust</li>
+                <li>Nautilus</li>
+                <li>Daytona</li>
+                <li>GMT</li>
+                <li>Royal Oak</li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Hero slider
+let slides = document.querySelectorAll('.hero img');
+let dots = document.querySelectorAll('.dot');
+let index = 0;
+
+function showSlide(n){
+    slides.forEach(s=>s.classList.remove('active'));
+    dots.forEach(d=>d.classList.remove('active'));
+    slides[n].classList.add('active');
+    dots[n].classList.add('active');
+}
+
+document.querySelector('.right').onclick = () => { index=(index+1)%slides.length; showSlide(index); };
+document.querySelector('.left').onclick = () => { index=(index-1+slides.length)%slides.length; showSlide(index); };
+
+// Scroll reveal
+window.addEventListener('scroll', ()=>{
+    document.querySelectorAll('.reveal').forEach(el=>{
+        if(el.getBoundingClientRect().top < window.innerHeight-100){
+            el.classList.add('active');
+        }
+    });
+});
+
+// Contadores animados
+function animateValue(el, start, end, duration, suffix){
+    let startTime=null;
+    const step=(timestamp)=>{
+        if(!startTime) startTime=timestamp;
+        const progress=Math.min((timestamp-startTime)/duration,1);
+        const value=Math.floor(progress*(end-start)+start);
+        el.textContent=value+(suffix||'');
+        if(progress<1) requestAnimationFrame(step);
+        else el.textContent=end+(suffix||'');
+    };
+    requestAnimationFrame(step);
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+    const counters=document.querySelectorAll('.stat-number');
+    if('IntersectionObserver' in window){
+        const obs=new IntersectionObserver((entries, observer)=>{
+            entries.forEach(entry=>{
+                if(entry.isIntersecting){
+                    const el=entry.target;
+                    const target=parseInt(el.getAttribute('data-target'),10)||0;
+                    const suffix=el.getAttribute('data-suffix')||'';
+                    animateValue(el,0,target,1400,suffix);
+                    observer.unobserve(el);
+                }
+            });
+        }, {threshold:0.5});
+        counters.forEach(c=>obs.observe(c));
+    } else {
+        counters.forEach(el=>{
+            const target=parseInt(el.getAttribute('data-target'),10)||0;
+            const suffix=el.getAttribute('data-suffix')||'';
+            animateValue(el,0,target,1400,suffix);
+        });
+    }
+});
+</script>
+
+</body>
+</html>
